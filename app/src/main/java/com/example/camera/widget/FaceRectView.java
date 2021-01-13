@@ -3,13 +3,14 @@ package com.example.camera.widget;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.example.camera.model.DrawInfo;
-import com.example.camera.util.DrawHelper;
+import com.example.camera.Model.DrawInfo;
+import com.example.camera.utils.DrawHelper;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

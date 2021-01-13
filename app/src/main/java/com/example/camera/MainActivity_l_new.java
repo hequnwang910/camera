@@ -29,11 +29,9 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
 import com.arcsoft.face.enums.DetectMode;
-import com.example.camera.model.DrawInfo;
-import com.example.camera.util.DrawHelper;
-import com.example.camera.util.camera.CameraHelper;
-import com.example.camera.util.camera.CameraListener;
-import com.example.camera.util.face.RecognizeColor;
+
+import com.example.camera.utils.DrawHelper;
+import com.example.camera.utils.camera.CameraHelper;
 import com.example.camera.widget.FaceRectView;
 
 import java.util.ArrayList;
@@ -252,61 +250,6 @@ public class MainActivity_l_new extends AppCompatActivity  {
 
 
                 /*
-                * 显示人脸框
-                * */
-                if (faceRectView != null) {
-                    faceRectView.clearFaceInfo();
-                }
-                CameraListener cameraListener = new CameraListener() {
-
-                    @Override
-                    public void onCameraOpened(Camera camera, int cameraId, int displayOrientation, boolean isMirror) {
-
-                        drawHelper = new DrawHelper(previewSize.width, previewSize.height, mCameraSurfaceView.getWidth(), mCameraSurfaceView.getHeight(), displayOrientation
-                                , cameraId, isMirror, false, false);
-
-                    }
-
-                    @Override
-                    public void onPreview(byte[] data, Camera camera) {
-
-                    }
-
-                    @Override
-                    public void onCameraClosed() {
-                        Log.i(TAG, "onCameraClosed: ");
-
-                    }
-
-                    @Override
-                    public void onCameraError(Exception e) {
-                        Log.i(TAG, "onCameraError: " + e.getMessage());
-
-                    }
-
-                    @Override
-                    public void onCameraConfigurationChanged(int cameraID, int displayOrientation) {
-                        if (drawHelper != null) {
-                            drawHelper.setCameraDisplayOrientation(displayOrientation);
-                        }
-                        Log.i(TAG, "onCameraConfigurationChanged: " + cameraID + "  " + displayOrientation);
-
-                    }
-                };
-                cameraHelper = new CameraHelper.Builder()
-                        .previewViewSize(new Point(mCameraSurfaceView.getMeasuredWidth(), mCameraSurfaceView.getMeasuredHeight()))
-                        .rotation(getWindowManager().getDefaultDisplay().getRotation())
-                        .specificCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT)
-                        .isMirror(false)
-                        .previewOn(mCameraSurfaceView)
-                        .cameraListener(cameraListener)
-                        .build();
-                cameraHelper.init();
-                cameraHelper.start();
-
-
-
-                /*
                  * 显示人脸个数
                  * */
                 faceInfoList = new ArrayList<>();
@@ -408,20 +351,10 @@ public class MainActivity_l_new extends AppCompatActivity  {
                     liveness.setText("活体：--");
                 }
 
-
-
-
                 /*
                 * 显示人脸框
                 * */
 
-                if (faceRectView != null && drawHelper != null) {
-                    List<DrawInfo> drawInfoList = new ArrayList<>();
-                    for (int i = 0; i < faceInfoList.size(); i++) {
-                        drawInfoList.add(new DrawInfo(drawHelper.adjustRect(faceInfoList.get(i).getRect()), genderInfoList.get(i).getGender(), ageInfoList.get(i).getAge(), livenessInfoList.get(i).getLiveness(), RecognizeColor.COLOR_UNKNOWN, null));
-                    }
-                    drawHelper.draw(faceRectView, drawInfoList);
-                }
 
 
 

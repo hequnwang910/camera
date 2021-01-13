@@ -1,4 +1,4 @@
-package com.example.camera.util.camera;
+package com.example.camera.utils.camera;
 
 import android.hardware.Camera;
 

@@ -38,6 +38,10 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
 import com.arcsoft.face.enums.DetectMode;
+import com.example.camera.Model.DrawInfo;
+import com.example.camera.utils.DrawHelper;
+import com.example.camera.utils.face.RecognizeColor;
+import com.example.camera.widget.FaceRectView;
 
 
 import java.io.BufferedOutputStream;
@@ -60,6 +64,12 @@ public class MainActivity_l extends AppCompatActivity {
     /*
      * arc_whq
      * */
+
+    /*
+     * 1.12人脸框
+     * */
+    private DrawHelper drawHelper;
+    private FaceRectView faceRectView;
 
     public Rect rect1;
 
@@ -186,6 +196,14 @@ public class MainActivity_l extends AppCompatActivity {
         liveness = findViewById(R.id.liveness);
         fmrect = new Rect();
 
+        /*
+        * 1.13人脸识别框
+        * */
+        faceRectView = findViewById(R.id.face_rect_view);//
+
+
+
+
     }
 
     @Override
@@ -265,6 +283,16 @@ public class MainActivity_l extends AppCompatActivity {
          * */
 
         Camera camera = CameraUtils.getmCamera();
+
+        /*
+         * 1.12whq人脸框
+         * */
+
+        previewSize = camera.getParameters().getPreviewSize();
+        drawHelper = new DrawHelper(previewSize.width, previewSize.height, mCameraSurfaceView.getWidth(), mCameraSurfaceView.getHeight(), 90
+                , 1, false, false, false);
+
+
         camera.setDisplayOrientation(90);
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -399,6 +427,18 @@ public class MainActivity_l extends AppCompatActivity {
                 }
 
 
+                /*
+                 * 1.12人脸框
+                 * */
+                if (faceRectView != null && drawHelper != null && faceInfoList.size()>0 && genderInfoList.size()>0 && ageInfoList.size()>0 && livenessInfoList.size()>0) {
+                    List<DrawInfo> drawInfoList = new ArrayList<>();
+                    //System.out.println("参数的数量是："+ faceInfoList.size());
+                    for (int i = 0; i < faceInfoList.size(); i++) {
+                        drawInfoList.add(new DrawInfo(drawHelper.adjustRect(faceInfoList.get(i).getRect()), genderInfoList.get(i).getGender(), ageInfoList.get(i).getAge(), livenessInfoList.get(i).getLiveness(), RecognizeColor.COLOR_UNKNOWN, null));
+                    }
+                    drawHelper.draw(faceRectView, drawInfoList);
+                }
+
 
 
 
@@ -423,38 +463,21 @@ public class MainActivity_l extends AppCompatActivity {
                 ///存人脸框
                 getRGBData(bitmap1);
 
-//                fmrect = drawface_three(faceInfoList.get(0).getRect());
-//                drawFaceRect(bitmap);
 
-//                drawface(faceInfoList.get(0).getRect());
-//                FaceInfo faceInfo = faceInfoList.get(0);
-//                Rect rect = faceInfo.getRect();
-//                int top = rect.top;
-                Log.i(TAG, "bitmap的宽大小: " + bitmap.getWidth());
-                Log.i(TAG, "bitmap的高大小: " + bitmap.getHeight());
+
                 Log.i(TAG, "faceInfoList: " + faceInfoList);
                 Log.i(TAG, "Rect的top: " + faceInfoList.get(0).getRect().top);
                 Log.i(TAG, "Rect的left: " + faceInfoList.get(0).getRect().left);
                 Log.i(TAG, "Rect的bottom: " + faceInfoList.get(0).getRect().bottom);
                 Log.i(TAG, "Rect的right: " + faceInfoList.get(0).getRect().right);
 
-                ////打印新的坐标，这些新的坐标是对的；划重点
+                //打印新的坐标，这些新的坐标是对的；划重点
                 Log.i(TAG, "Rect1的top: " + rect1.top);
                 Log.i(TAG, "Rect1的left: " + rect1.left);
                 Log.i(TAG, "Rect1的bottom: " + rect1.bottom);
                 Log.i(TAG, "Rect1的right: " + rect1.right);
 
 
-
-//                int leftNew=(faceInfoList.get(0).getRect().left+1000)*(parameters.getPreviewSize().width)/2000;
-//                int topNew = (faceInfoList.get(0).getRect().top + 1000)*(parameters.getPreviewSize().height)/2000;
-//                int rightNew = (faceInfoList.get(0).getRect().right + 1000)*(parameters.getPreviewSize().width)/2000;
-//                int bottomNew = (faceInfoList.get(0).getRect().bottom + 1000)*(parameters.getPreviewSize().height)/2000;
-//
-//                Log.i(TAG, "Rect的top: " + topNew);
-//                Log.i(TAG, "Rect的left: " + leftNew);
-//                Log.i(TAG, "Rect的bottom: " + bottomNew);
-//                Log.i(TAG, "Rect的right: " + rightNew);
 
 
             }
@@ -647,44 +670,6 @@ public class MainActivity_l extends AppCompatActivity {
         }
 
         return newRect;
-    }
-
-
-    /*
-    * 1.6日画虹软的矩形框drawFaceRect
-    * */
-    public Rect drawFaceRect(Canvas canvas,  Paint paint ,Rect mrect) {
-
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeWidth(6);
-        paint.setColor(Color.RED);
-        paint.setAntiAlias(true);
-
-        Path mPath = new Path();
-        // 左上
-        Rect rect = mrect;
-        mPath.moveTo(rect.left, rect.top + rect.height() / 4);
-        mPath.lineTo(rect.left, rect.top);
-        mPath.lineTo(rect.left + rect.width() / 4, rect.top);
-        // 右上
-        mPath.moveTo(rect.right - rect.width() / 4, rect.top);
-        mPath.lineTo(rect.right, rect.top);
-        mPath.lineTo(rect.right, rect.top + rect.height() / 4);
-        // 右下
-        mPath.moveTo(rect.right, rect.bottom - rect.height() / 4);
-        mPath.lineTo(rect.right, rect.bottom);
-        mPath.lineTo(rect.right - rect.width() / 4, rect.bottom);
-        // 左下
-        mPath.moveTo(rect.left + rect.width() / 4, rect.bottom);
-        mPath.lineTo(rect.left, rect.bottom);
-        mPath.lineTo(rect.left, rect.bottom - rect.height() / 4);
-        canvas.drawPath(mPath, paint);
-
-        // 绘制文字，用最细的即可，避免在某些低像素设备上文字模糊
-        paint.setStrokeWidth(1);
-
-        return rect;
-
     }
 
 

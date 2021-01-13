@@ -1,4 +1,4 @@
-package com.example.camera.util.camera;
+package com.example.camera.utils.camera;
 
 import android.graphics.ImageFormat;
 import android.graphics.Point;
@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 相机辅助类，和{@link CameraListener}共同使用，获取nv21数据等操作
  */
-public class CameraHelper implements Camera.PreviewCallback {
+public class CameraHelper implements Camera.PreviewCallback  {
     private static final String TAG = "CameraHelper";
     private Camera mCamera;
     private int mCameraId;
@@ -32,9 +32,8 @@ public class CameraHelper implements Camera.PreviewCallback {
     private int additionalRotation;
     private boolean isMirror = false;
 
-
     private Integer specificCameraId = null;
-    private CameraListener cameraListener;
+    private com.example.camera.utils.camera.CameraListener cameraListener;
 
     private CameraHelper(CameraHelper.Builder builder) {
         previewDisplayView = builder.previewDisplayView;
@@ -69,7 +68,7 @@ public class CameraHelper implements Camera.PreviewCallback {
                 return;
             }
             //相机数量为2则打开1,1则打开0,相机ID 1为前置，0为后置
-            mCameraId = Camera.getNumberOfCameras() - 1;
+            mCameraId = Camera.getNumberOfCameras() -1;
             //若指定了相机ID且该相机存在，则打开指定的相机
             if (specificCameraId != null && specificCameraId <= mCameraId) {
                 mCameraId = specificCameraId;
@@ -117,7 +116,7 @@ public class CameraHelper implements Camera.PreviewCallback {
                 } else {
                     mCamera.setPreviewDisplay(((SurfaceView) previewDisplayView).getHolder());
                 }
-                mCamera.setPreviewCallback(this);
+                mCamera.setPreviewCallback((Camera.PreviewCallback) this);
                 mCamera.startPreview();
                 if (cameraListener != null) {
                     cameraListener.onCameraOpened(mCamera, mCameraId, displayOrientation, isMirror);
@@ -258,7 +257,6 @@ public class CameraHelper implements Camera.PreviewCallback {
         }
         return mCamera.getParameters().getSupportedPictureSizes();
     }
-
 
 
     @Override

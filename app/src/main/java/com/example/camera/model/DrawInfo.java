@@ -1,4 +1,4 @@
-package com.example.camera.model;
+package com.example.camera.Model;
 
 import android.graphics.Rect;
 
@@ -34,7 +34,6 @@ public class DrawInfo {
     public void setRect(Rect rect) {
         this.rect = rect;
     }
-
     public int getSex() {
         return sex;
     }
@@ -58,6 +57,8 @@ public class DrawInfo {
     public void setLiveness(int liveness) {
         this.liveness = liveness;
     }
+
+
 
     public int getColor() {
         return color;

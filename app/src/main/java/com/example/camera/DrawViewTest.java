@@ -56,14 +56,7 @@ public class DrawViewTest extends View{
 //        // 画实心圆
 //        canvas.drawCircle(200, 200, 100, mPaint);
         // 画矩形
-//        canvas.drawRect(90, 447, 90+656, 447+1013, mPaint);
-//        canvas.drawRect(447, 90, 1013, 656, mPaint);
-//        canvas.drawRect(901, 400, 1247, 594, mPaint);
-//        canvas.drawRect(400, 901, 594, 1247, mPaint);
 
-
-//        canvas.drawRect(400, 67, 975, 642, mPaint);
-//        canvas.drawRect(117, 444, 980, 1281, mPaint);
         canvas.drawRect(107, 708, 822, 1404, mPaint);
 
     }

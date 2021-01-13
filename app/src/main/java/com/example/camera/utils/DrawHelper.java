@@ -1,4 +1,4 @@
-package com.example.camera.util;
+package com.example.camera.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -6,7 +6,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.hardware.Camera;
 
-import com.example.camera.model.DrawInfo;
+import com.example.camera.Model.DrawInfo;
 import com.example.camera.widget.FaceRectView;
 import com.arcsoft.face.AgeInfo;
 import com.arcsoft.face.GenderInfo;
@@ -100,11 +100,15 @@ public class DrawHelper {
         switch (cameraDisplayOrientation) {
             case 0:
                 if (cameraId == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    newRect.left = canvasWidth - rect.right;
-                    newRect.right = canvasWidth - rect.left;
-                } else {
+//                    newRect.left = canvasWidth - rect.right;
+//                    newRect.right = canvasWidth - rect.left;
                     newRect.left = rect.left;
                     newRect.right = rect.right;
+                } else {
+//                    newRect.left = rect.left;
+//                    newRect.right = rect.right;
+                    newRect.left = canvasWidth - rect.right;
+                    newRect.right = canvasWidth - rect.left;
                 }
                 newRect.top = rect.top;
                 newRect.bottom = rect.bottom;
@@ -213,6 +217,8 @@ public class DrawHelper {
         if (drawInfo.getName() == null) {
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setTextSize(rect.width() / 8);
+
+            //String str="";
 
             String str = (drawInfo.getSex() == GenderInfo.MALE ? "MALE" : (drawInfo.getSex() == GenderInfo.FEMALE ? "FEMALE" : "UNKNOWN"))
                     + ","

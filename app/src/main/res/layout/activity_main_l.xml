@@ -12,6 +12,11 @@
 
     </FrameLayout>
 
+    <com.example.camera.widget.FaceRectView
+        android:id="@+id/face_rect_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 
     <LinearLayout

@@ -1,11 +1,10 @@
-package com.example.camera.util;
+package com.example.camera.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.arcsoft.face.FaceEngine;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
-import com.arcsoft.face.enums.DetectMode;
+import com.example.camera.MainActivity_l;
 
 public class ConfigUtil {
     private static final String APP_NAME = "ArcFaceDemo";

@@ -30,11 +30,9 @@ import com.arcsoft.face.GenderInfo;
 import com.arcsoft.face.LivenessInfo;
 import com.arcsoft.face.enums.DetectFaceOrientPriority;
 import com.arcsoft.face.enums.DetectMode;
-import com.example.camera.model.DrawInfo;
-import com.example.camera.util.DrawHelper;
-import com.example.camera.util.camera.CameraHelper;
-import com.example.camera.util.camera.CameraListener;
-import com.example.camera.util.face.RecognizeColor;
+
+import com.example.camera.utils.DrawHelper;
+import com.example.camera.utils.camera.CameraHelper;
 import com.example.camera.widget.FaceRectView;
 
 import java.util.ArrayList;

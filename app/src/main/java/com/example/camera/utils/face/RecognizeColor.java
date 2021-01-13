@@ -1,4 +1,4 @@
-package com.example.camera.util.face;
+package com.example.camera.utils.face;
 
 import android.graphics.Color;
 
